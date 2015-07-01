@@ -1,0 +1,7 @@
+general:
+  build_dir: src
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: aqueous-fortress-3052
