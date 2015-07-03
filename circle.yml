@@ -2,7 +2,7 @@ deployment:
   production:
     branch: master
     commands:
-      - git subtree push -P src heroku master
+      - git subtree push -P src https://git.heroku.com/aqueous-fortress-3052.git master
 test:
   override:
    - mocha src
