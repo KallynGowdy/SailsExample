@@ -6,4 +6,4 @@ deployment:
       - git subtree push -P src heroku master
 test:
   override:
-   - mocha src
+   - mocha src/test
