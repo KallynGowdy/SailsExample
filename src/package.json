@@ -26,8 +26,10 @@
     "socket.io": "^1.3.5"
   },
   "scripts": {
-    "debug": "node debug src/app.js",
-    "start": "node src/app.js"
+    "debug": "node app.js",
+    "start": "forever start app.js --prod",
+    "test": "mocha",
+    "postinstall": "npm install forever -g"
   },
   "main": "src/app.js",
   "repository": {
