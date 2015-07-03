@@ -3,7 +3,7 @@ deployment:
     branch: master
     commands:
       - heroku git:remote -a aqueous-fortress-3052 --ssh-git
-      - git push heroku `git subtree split --prefix src heroku master`:master --force
+      - git push heroku `git subtree split --prefix src master`:master --force
 test:
   override:
    - mocha src/test
