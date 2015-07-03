@@ -3,6 +3,7 @@ deployment:
     branch: master
     commands:
       - heroku git:remote -a aqueous-fortress-3052
+      - heroku login
       - git subtree push -P src heroku master
 test:
   override:
