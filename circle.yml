@@ -2,8 +2,8 @@ deployment:
   production:
     branch: master
     commands:
-      - heroku git:remote -a aqueous-fortress-3052 --ssh-git
-      - git push heroku `git subtree split --prefix src master`:master --force
+      - get remote add openshift ssh://5596ee0de0b8cd21ef000029@sails-kallyngowdy.rhcloud.com/~/git/sails.git/
+      - git push openshift master
 test:
   override:
-   - mocha src/test
+   - mocha test
