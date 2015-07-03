@@ -1,5 +1,8 @@
 deployment:
-  staging:
+  production:
     branch: master
-    heroku:
-      appname: aqueous-fortress-3052
+    commands:
+      - git subtree push --prefix src heroku
+test:
+  override:
+   - mocha src
