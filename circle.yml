@@ -2,7 +2,7 @@ deployment:
   production:
     branch: master
     commands:
-      - git subtree push --prefix src heroku
+      - git subtree push -P src heroku master
 test:
   override:
    - mocha src
