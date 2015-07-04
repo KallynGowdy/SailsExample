@@ -35,7 +35,7 @@
     "test": "mocha",
     "postinstall": "npm install forever -g"
   },
-  "main": "src/app.js",
+  "main": "app.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/anonymous node/sails user/src.git"
