@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/api/controllers/TodoController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api/models/Todo.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/.bowerrc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/elements/sails-app.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/elements/todo-item.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/js/app.ts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/js/components/Todos.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/js/components/Todos.ts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/js/dependencies/angular2.dev.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/js/typings/socket.io-client/socket.io-client.d.ts" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/circle.yml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/package.json" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/config/env/production.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/config/local.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/config/models.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/package.json" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/test/test.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tasks/config/clean.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tasks/pipeline.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/homepage.hbs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/layout.hbs" charset="UTF-8" />
   </component>
 </project>

@@ -40,5 +40,8 @@
     "url": "git://github.com/anonymous node/sails user/src.git"
   },
   "author": "anonymous node/sails user",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "bower": "^1.4.1"
+  }
 }

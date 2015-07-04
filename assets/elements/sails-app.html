@@ -1,0 +1,90 @@
+<link rel="import" href="../bower_components/polymer/polymer.html"/>
+<link rel="import" href="../bower_components/paper-input/paper-input.html"/>
+<link rel="import" href="../bower_components/paper-button/paper-button.html"/>
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html"/>
+<link rel="import" href="./todo-item.html"/>
+<dom-module id="sails-app">
+  <template>
+    <iron-ajax auto url="/todo" handle-as="json" on-response="handleTodos"></iron-ajax>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Sails Example</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/login">Login</a></li>
+          </ul>
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="container">
+      Welcome to the Polymer version of Sails!
+
+      <div>
+        <h3>Todos</h3>
+        <ul>
+          <template is="dom-repeat" items="[[todos]]">
+            <li>
+              <todo-item todo="{{item}}"></todo-item>
+            </li>
+          </template>
+        </ul>
+        <paper-input id="input" bind-value="{{text}}" placeholder="Todo text..."></paper-input>
+        <paper-button raised on-click="addTodo">Add Todo</paper-button>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: "sails-app",
+      properties: {
+        text: {
+          type: String,
+          notify: true
+        },
+        todos: {
+          type: Array,
+          value: []
+        }
+      },
+      created: function () {
+        var _this = this;
+        io.socket.get('/todo/addTodo');
+        io.socket.on('todo', function (obj) {
+          if (obj.verb === 'created') {
+            _this.push("todos", obj.data);
+            console.info("Added " + obj.data.text + ";" + _this.todos);
+          }
+        });
+      },
+      addTodo: function () {
+        var todo = {text: this.text, checked: false};
+        io.socket.post('/todo/addTodo', todo);
+        this.$.input.value = "";
+      },
+
+      handleTodos: function ($event) {
+        var _this = this;
+        $event.detail.response.forEach(function (todo) {
+          _this.push("todos", todo);
+        });
+      }
+    });
+  </script>
+
+</dom-module>

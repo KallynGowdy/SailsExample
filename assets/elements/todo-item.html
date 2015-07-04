@@ -1,0 +1,19 @@
+<link rel="import" href="../bower_components/polymer/polymer.html"/>
+<dom-module id="todo-item">
+  <template>
+    <div>
+      <strike hidden$="{{!todo.checked}}">{{todo.text}}</strike>
+      <span hidden$="{{todo.checked}}">{{todo.text}}</span>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: "todo-item",
+      properties: {
+        todo: Object
+      }
+    });
+  </script>
+
+</dom-module>
