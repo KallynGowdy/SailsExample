@@ -31,7 +31,7 @@
   },
   "scripts": {
     "debug": "node app.js",
-    "start": "node app.js --prod",
+    "start": "forever start app.js --prod",
     "test": "mocha",
     "postinstall": "npm install forever -g"
   },
