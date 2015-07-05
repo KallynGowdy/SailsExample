@@ -2,8 +2,23 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html"/>
 <link rel="import" href="../bower_components/paper-button/paper-button.html"/>
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html"/>
+<link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html"/>
 <link rel="import" href="./todo-item.html"/>
 <dom-module id="sails-app">
+  <style>
+    #add-todo{
+      margin-top: 15px;
+      margin-bottom: 15px;
+      float: right;
+      background: #1d41ff;
+      color: white;
+    }
+
+    #add-todo[disabled] {
+      color: #777;
+      background: #a1a1a1;
+    }
+  </style>
   <template>
     <iron-ajax auto url="/todo" handle-as="json" on-response="handleTodos"></iron-ajax>
     <nav class="navbar navbar-default navbar-static-top">
@@ -32,17 +47,16 @@
       </div>
     </nav>
     <div class="container">
-      Welcome to the Polymer version of Sails!
-
       <div>
-        <h3>Todos</h3>
         <paper-material class="container" elevation="1">
+          <h3 class="paper-header">Todos</h3>
           <template is="dom-repeat" items="[[todos]]">
             <todo-item todo="{{item}}"></todo-item>
           </template>
+          <br/>
+          <paper-input id="input" bind-value="{{text}}" on-keyup="doneTyping" placeholder="Todo text..."></paper-input>
+          <paper-button disabled raised id="add-todo" on-click="addTodo">Add Todo</paper-button>
         </paper-material>
-        <paper-input id="input" bind-value="{{text}}" placeholder="Todo text..."></paper-input>
-        <paper-button raised on-click="addTodo">Add Todo</paper-button>
       </div>
     </div>
   </template>
@@ -60,6 +74,11 @@
           value: []
         }
       },
+
+      observers: [
+        "observeButtonShouldBeDisabled(text)"
+      ],
+
       created: function () {
         var _this = this;
         io.socket.get('/todo/addTodo');
@@ -78,9 +97,24 @@
 
       handleTodos: function ($event) {
         var _this = this;
-        $event.detail.response.forEach(function (todo) {
+        var todos = $event.detail.response;
+        todos.forEach(function (todo) {
           _this.push("todos", todo);
         });
+        io.socket.get('/todo/update', todos.map(function (t) {
+          return t.id;
+        }));
+      },
+
+      observeButtonShouldBeDisabled: function (text) {
+        this.$['add-todo'].disabled = !(text || text.length > 0);
+      },
+
+      doneTyping: function(event){
+        if(event.which === 13){
+          this.addTodo();
+          this.set('text', '');
+        }
       }
     });
   </script>

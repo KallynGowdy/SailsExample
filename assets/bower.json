@@ -22,6 +22,7 @@
     "iron-ajax": "PolymerElements/iron-ajax#1.0.0",
     "paper-item": "PolymerElements/paper-item#1.0.0",
     "paper-material": "PolymerElements/paper-material#1.0.0",
-    "paper-behaviors": "PolymerElements/paper-behaviors#1.0.0"
+    "paper-behaviors": "PolymerElements/paper-behaviors#1.0.0",
+    "paper-header-panel": "PolymerElements/paper-header-panel#1.0.0"
   }
 }

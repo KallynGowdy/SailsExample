@@ -7,11 +7,15 @@
     paper-item > paper-checkbox {
       margin-right: 16px;
     }
+
+    .strike {
+      text-decoration: line-through;
+    }
   </style>
   <template>
-    <paper-item role="listitem" class="x-scope paper-icon-item-0">
+    <paper-item role="listitem" class="x-scope">
       <paper-checkbox toggles checked="{{todo.checked}}"></paper-checkbox>
-      <div class="flex">{{todo.text}}</div>
+      <div class="flex"><span class$="{{textClass}}">{{todo.text}}</span></div>
     </paper-item>
   </template>
 
@@ -19,22 +23,29 @@
     Polymer({
       is: "todo-item",
       properties: {
-        todo: Object
+        todo: Object,
+        textClass: {
+          type: String,
+          computed: "calculateClass(todo.checked)"
+        }
       },
       observers: [
         'modelUpdated(todo.checked)'
       ],
       ready: function () {
         var _this = this;
-        io.socket.get('/todo/update', {ids: [this.todo.id]});
+        io.socket.get('/todo/update', [_this.todo.id]);
         io.socket.on('todo', function (obj) {
-          if (obj.id === _this.todo.id && obj.verb === 'updated') {
-            _this.set('todo.checked', obj.data.checked);
+          if (obj.verb === 'updated' && _this.todo.id === obj.id) {
+            _this.set("todo.checked", obj.data.checked);
           }
         });
       },
       modelUpdated: function (change) {
         io.socket.post('/todo/update', this.todo);
+      },
+      calculateClass: function(checked){
+        return checked ? 'strike' : '';
       }
     });
   </script>
