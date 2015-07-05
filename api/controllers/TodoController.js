@@ -23,24 +23,50 @@ module.exports = {
   },
 
 
-  addTodo: function(req, res){
+  addTodo: function (req, res) {
     var data = req.params.all();
 
-    if(req.isSocket && req.method === 'POST'){
-      Todo.new(data, function(err, data){
-        if(!err){
+    if (req.isSocket && req.method === 'POST') {
+      Todo.new(data, function (err, data) {
+        if (!err) {
           console.log('Todo Successfully Created With: "' + data.text + '"');
           res.ok();
-        }else{
+        } else {
           res.serverError();
         }
       });
     }
-    else if(req.isSocket){
+    else if (req.isSocket) {
       Todo.watch(req.socket);
-      console.log('User subscribed to ' + req.socket.id);
-      res.ok();
+
+    }
+  },
+
+  update: function (req, res) {
+    var data = req.params.all();
+    if (req.isSocket && req.method === 'POST') {
+      Todo.updateAndPublish(req, data, function (err) {
+        if (!err) {
+          res.ok();
+        }
+        else {
+          res.serverError();
+        }
+      });
+    }
+    else if (req.isSocket) {
+      Todo.find({}).exec(function (err, listOfTodos) {
+        if (!err) {
+          Todo.subscribe(req.socket, listOfTodos, 'update');
+          console.log('User subscribed to ' + req.socket.id + ': "update"');
+          res.ok();
+        }
+        else{
+          res.serverError();
+        }
+      });
     }
   }
+}
 
-};
+;

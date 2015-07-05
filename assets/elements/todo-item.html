@@ -1,10 +1,18 @@
 <link rel="import" href="../bower_components/polymer/polymer.html"/>
+<link rel="import" href="../bower_components/paper-item/paper-item.html"/>
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html"/>
+
 <dom-module id="todo-item">
+  <style>
+    paper-item > paper-checkbox {
+      margin-right: 16px;
+    }
+  </style>
   <template>
-    <div>
-      <strike hidden$="{{!todo.checked}}">{{todo.text}}</strike>
-      <span hidden$="{{todo.checked}}">{{todo.text}}</span>
-    </div>
+    <paper-item role="listitem" class="x-scope paper-icon-item-0">
+      <paper-checkbox toggles checked="{{todo.checked}}"></paper-checkbox>
+      <div class="flex">{{todo.text}}</div>
+    </paper-item>
   </template>
 
   <script>
@@ -12,6 +20,21 @@
       is: "todo-item",
       properties: {
         todo: Object
+      },
+      observers: [
+        'modelUpdated(todo.checked)'
+      ],
+      ready: function () {
+        var _this = this;
+        io.socket.get('/todo/update', {ids: [this.todo.id]});
+        io.socket.on('todo', function (obj) {
+          if (obj.id === _this.todo.id && obj.verb === 'updated') {
+            _this.set('todo.checked', obj.data.checked);
+          }
+        });
+      },
+      modelUpdated: function (change) {
+        io.socket.post('/todo/update', this.todo);
       }
     });
   </script>

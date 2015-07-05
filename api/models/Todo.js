@@ -18,5 +18,18 @@ module.exports = {
       }
       callback(err, data);
     });
+  },
+
+  updateAndPublish: function (req, inputs, callback) {
+    Todo.update({id: inputs.id}, {
+      text: inputs.text,
+      checked: inputs.checked,
+      id: inputs.id
+    }).exec(function (err, data) {
+      if (!err) {
+        Todo.publishUpdate(data[0].id, { checked: data[0].checked }, req.socket);
+      }
+      callback(err, data);
+    });
   }
 };

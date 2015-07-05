@@ -36,13 +36,11 @@
 
       <div>
         <h3>Todos</h3>
-        <ul>
+        <paper-material class="container" elevation="1">
           <template is="dom-repeat" items="[[todos]]">
-            <li>
-              <todo-item todo="{{item}}"></todo-item>
-            </li>
+            <todo-item todo="{{item}}"></todo-item>
           </template>
-        </ul>
+        </paper-material>
         <paper-input id="input" bind-value="{{text}}" placeholder="Todo text..."></paper-input>
         <paper-button raised on-click="addTodo">Add Todo</paper-button>
       </div>
